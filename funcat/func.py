@@ -61,17 +61,17 @@ class MovingAverageSeries(BaseSeries):
         return 'talib.MA'
 
 
-class WeightedMovingAverageSeries(OneArgumentSeries):
+class WeightedMovingAverageSeries(BaseSeries):
     """http://www.tadoc.org/indicator/WMA.htm"""
     func = talib.WMA
 
 
-class ExponentialMovingAverageSeries(OneArgumentSeries):
+class ExponentialMovingAverageSeries(BaseSeries):
     """http://www.fmlabs.com/reference/default.htm?url=ExpMA.htm"""
     func = talib.EMA
 
 
-class StdSeries(OneArgumentSeries):
+class StdSeries(BaseSeries):
     func = talib.STDDEV
 
 
