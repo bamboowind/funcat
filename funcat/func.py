@@ -18,6 +18,25 @@ from .time_series import (
     ensure_timeseries,
 )
 
+class BaseSeries(NumericSeries):
+
+    def __init__(self, series, arg):
+        if isinstance(series, NumericSeries):
+            series = series.series
+
+            try:
+                series[series == np.inf] = np.nan
+                series = eval(self.funcName)(series, arg)
+            except Exception as e:
+                raise FormulaException(e)
+        super(BaseSeries, self).__init__(series)
+        self.extra_create_kwargs["arg"] = arg
+
+
+    @property
+    def funcName(self):
+        raise NotImplementedError
+
 
 class OneArgumentSeries(NumericSeries):
     func = talib.MA
@@ -35,9 +54,11 @@ class OneArgumentSeries(NumericSeries):
         self.extra_create_kwargs["arg"] = arg
 
 
-class MovingAverageSeries(OneArgumentSeries):
+class MovingAverageSeries(BaseSeries):
     """http://www.tadoc.org/indicator/MA.htm"""
-    func = talib.MA
+    @property
+    def funcName(self):
+        return 'talib.MA'
 
 
 class WeightedMovingAverageSeries(OneArgumentSeries):
