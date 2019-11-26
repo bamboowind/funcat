@@ -63,17 +63,20 @@ class MovingAverageSeries(BaseSeries):
 
 class WeightedMovingAverageSeries(BaseSeries):
     """http://www.tadoc.org/indicator/WMA.htm"""
-    func = talib.WMA
-
+    @property
+    def funcName(self):
+        return 'talib.WMA'
 
 class ExponentialMovingAverageSeries(BaseSeries):
     """http://www.fmlabs.com/reference/default.htm?url=ExpMA.htm"""
-    func = talib.EMA
-
+    @property
+    def funcName(self):
+        return 'talib.EMA'
 
 class StdSeries(BaseSeries):
-    func = talib.STDDEV
-
+    @property
+    def funcName(self):
+        return 'talib.STDDEV'
 
 class TwoArgumentSeries(NumericSeries):
     func = talib.STDDEV
